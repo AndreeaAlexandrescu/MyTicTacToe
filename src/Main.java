@@ -14,8 +14,22 @@ public class Main {
 
             MyTicTacToe myTicTacToe = new MyTicTacToe(player1, player2);
 
-            myTicTacToe.playGame();
+
+            Scanner s = new Scanner(System.in);
+            boolean nextGame = true;
+            while (nextGame == true) {
+                myTicTacToe.playGame();
+                System.out.println("Do you want to play another game? Y/N");
+                String newGame = s.next();
+                if(newGame.toLowerCase().compareTo("y") != 0 ){
+                    nextGame = false;
+                    System.out.println("End Game!");
+                }
+            }
+
         }
+
     }
+
 
 

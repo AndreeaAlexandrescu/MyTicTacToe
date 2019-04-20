@@ -122,6 +122,28 @@ public class MyTicTacToe {
 
     }
 
+    public boolean validValueIndex(int line, int col) {
+        boolean validMove = true;
+        if (line < 0 || line >= GAME_SIZE) {
+            validMove = false;
+        }
+        if (col < 0 || col >= GAME_SIZE) {
+            validMove = false;
+        }
+        return validMove;
+    }
+
+    public boolean validValueOverwrite (int line, int col) {
+        boolean validMove = true;
+        if (game[line][col] != '.'){
+            validMove = false;
+        }
+        return validMove;
+    }
+
+
+
+
     public void playGame() {
         initBoard();
         System.out.println("incepe jocul");
@@ -135,14 +157,23 @@ public class MyTicTacToe {
 
 
         while (isWin == false && nrMoves < (GAME_SIZE * GAME_SIZE)) {
+            boolean validMove = false;
+            Move move = new Move(0,0);
+            while (validMove == false){
+                //citesc mutarea
+                move = readMove();
+                System.out.println(move.line);
+                System.out.println(move.col);
 
+                //validez mutarea
+                if((validValueIndex(move.line,move.col) == false) || (validValueOverwrite(move.line, move.col)==false)) {
+                    System.out.println("the values are not correct, please try again");
+                }
+                if ((validValueIndex(move.line,move.col) == true) && (validValueOverwrite(move.line, move.col)== true)) {
+                    validMove = true;
+                }
+            }
 
-            //citesc mutarea
-            Move move = readMove();
-            System.out.println(move.line);
-            System.out.println(move.col);
-
-            //validez mutarea
 
             //efectuez mutarea
             makeMove(move, currentSymbol);
@@ -172,10 +203,10 @@ public class MyTicTacToe {
 
         // afisez mesajul corespunzator
         if (isWin == true) {
-            System.out.println(currentPlayer.name);
+            System.out.println(currentPlayer.name+" WINED!!");
         } else {
 
-            System.out.println("nu a castigat nimeni");
+            System.out.println("No winner");
         }
     }
 }
